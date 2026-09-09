@@ -4,13 +4,27 @@ import type {Task,TaskBase} from '../types/task';
 const API = 'http://localhost:3000/tasks';
 
 export function useTasks(){
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
 
+  useEffect(() => {
+      let timeoutId: ReturnType<typeof setTimeout>;
+
+      if (isFetching) {
+          timeoutId = setTimeout(() => setShowLoading(true), 250);
+      } else {
+          setShowLoading(false);
+      }
+
+      return () => clearTimeout(timeoutId);
+  }, [isFetching]);
 
   //GET request at /tasks
   useEffect(() => {
+    setIsFetching(true);
     fetch(API)
       .then(res => {
         if(!res.ok){
@@ -21,11 +35,11 @@ export function useTasks(){
       })
       .then(data => {
         setTasks(data);
-        setIsLoading(false);
+        setIsFetching(false);
       })
       .catch(err => {
         setError(err.message);
-        setIsLoading(false);
+        setIsFetching(false);
       });
   }, []);
 
@@ -99,5 +113,5 @@ export function useTasks(){
     }
   };
 
-  return {tasks,error,isLoading,addTask,editTask,deleteTask};
+  return {tasks,error,isLoading:showLoading,addTask,editTask,deleteTask};
 }
