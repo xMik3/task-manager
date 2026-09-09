@@ -1,6 +1,6 @@
 import type {Task,TaskBase} from "../types/task";
-
 import {Button} from "./Button";
+import {Modal} from "./Modal";
 
 type EditTaskModalProps = {
   onClose: () => void;
@@ -27,28 +27,25 @@ export function EditTaskModal({onClose, onSubmit, task}: EditTaskModalProps) {
     };
     
     return (
-        <div>
-            <div>
-                <h2>Edit Task</h2>
+        <Modal title="Edit Task">
                 
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Title
-                        <input type="text" name="title" defaultValue={task.title} required />
-                    </label>
-                    
-                    <label>
-                        Description
-                        <textarea name="description" rows={3} defaultValue={task.description} />
-                    </label>
-                    
-                    <div className="modal-actions">
-                        <Button type="button" onClick={onClose}>Cancel</Button>
-                        <Button type="submit">Edit Task</Button>
-                    </div>
-                </form>
+            <form className="flex flex-col" onSubmit={handleSubmit}>
+                <label className="flex flex-col pb-4">
+                    Title
+                    <input className="mt-1.5 w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg p-2.5" type="text" name="title" defaultValue={task.title} required />
+                </label>
+                
+                <label className="flex flex-col pb-4">
+                    Description
+                    <textarea className="resize-none mt-1.5 w-full bg-slate-50 border border-slate-200 text-slate-900 text-sm rounded-lg p-2.5" name="description" rows={6} defaultValue={task.description} />
+                </label>
+                
+                <div className="w-3/4 sm:w-1/2 mx-auto flex justify-between pt-4">
+                    <Button variant="secondary" type="button" onClick={onClose}>Cancel</Button>
+                    <Button variant="primary" type="submit">Edit Task</Button>
+                </div>
+            </form>
 
-            </div>
-        </div>
+        </Modal>
     );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useTasks} from "./hooks/useTasks";
+
 import {Button} from "./components/Button";
 import {AnalyticsModal} from "./components/AnalyticsModal";
 import {TaskList} from "./components/TaskList";
@@ -20,11 +21,12 @@ function App(){
 
   const closeModal = () => setDisplayedModal("none");
 
+
   return(
-    <div>
-        <header>
-          <h1>Task Manager</h1>
-          <div>
+    <div className="min-h-screen bg-slate-50 text-slate-700 font-sans p-6">
+        <header className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-bold tracking-tight">Task Manager</h1>
+          <div className="flex gap-5">
             <Button  onClick={() => setDisplayedModal("add")}>Add Task</Button>
             <Button onClick={() => setDisplayedModal("analytics")}>Analytics</Button>
           </div>
@@ -39,6 +41,5 @@ function App(){
     </div>
   )
 }
-
 
 export default App;
