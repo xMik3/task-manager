@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import {useTasks} from "./hooks/useTasks";
 
 import {Button} from "./components/Button";
@@ -10,13 +10,13 @@ import {DeleteTaskModal} from "./components/DeleteTaskModal";
 
 import type {Task} from "./types/task";
 
-export type modals = "none" | "add" | "edit" | "delete" | "analytics";
+export type Modals = "none" | "add" | "edit" | "delete" | "analytics";
 
 function App(){
 
   const {tasks,error,isLoading,addTask,editTask,deleteTask} = useTasks();
 
-  const [displayedModal,setDisplayedModal] = useState<modals>("none");
+  const [displayedModal,setDisplayedModal] = useState<Modals>("none");
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
 
   const closeModal = () => setDisplayedModal("none");

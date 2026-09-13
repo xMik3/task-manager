@@ -1,12 +1,12 @@
 import {TaskListItem} from "./TaskListItem";
 import type {Task,TaskBase} from "../types/task";
-import type {modals} from "../App";
+import type {Modals} from "../App";
 
 type TaskListProps = {
     tasks: Task[];
     error: string | null;
     isLoading: boolean;
-    setDisplayedModal: (modal : modals) => void;
+    setDisplayedModal: (modal : Modals) => void;
     setSelectedTask: (task: Task) => void;
     editTask: (id:string,task:TaskBase) => void;
 };
@@ -14,8 +14,6 @@ type TaskListProps = {
 export function TaskList({tasks,error,isLoading,setDisplayedModal,setSelectedTask,editTask}:TaskListProps){
 
   if(error){
-    console.log(error)
-
     return(
         <div className="flex flex-col items-center justify-center py-12 space-y-6">
           <div className="text-center space-y-1">

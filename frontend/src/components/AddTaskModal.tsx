@@ -17,7 +17,7 @@ const statusColors = {
 
 export function AddTaskModal({onClose, onSubmit}: AddTaskModalProps){
 
-  const [status, setStatus] = useState<TaskStatus>("Pending");
+  const [statusSelection, setStatusSelection] = useState<TaskStatus>("Pending");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -52,7 +52,7 @@ export function AddTaskModal({onClose, onSubmit}: AddTaskModalProps){
         
         <label className="flex flex-col pb-4">
           Status
-          <select onChange={(e)=>{setStatus(e.target.value as TaskStatus)}} className={`h-9.5 mt-1.5 w-full border text-sm rounded-lg p-2.5 cursor-pointer font-bold block ${statusColors[status]}`} name="status" defaultValue="Pending">
+          <select onChange={(e)=>{setStatusSelection(e.target.value as TaskStatus)}} className={`h-9.5 mt-1.5 w-full border text-sm rounded-lg p-2.5 cursor-pointer font-bold block ${statusColors[statusSelection]}`} name="status" defaultValue="Pending">
             <option value="Pending">Pending</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>

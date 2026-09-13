@@ -22,7 +22,7 @@ export function DeleteTaskModal({onClose,onSubmit,task}:DeleteTaskModalProps){
 
                 <div className="w-3/4 sm:w-1/2 mx-auto flex justify-between">
                     <Button variant="secondary" onClick={onClose}>Cancel</Button>
-                    <Button variant="dangerOne" onClick={handleDelete}>Delete Task</Button>
+                    <Button variant="dangerOutline" onClick={handleDelete}>Delete Task</Button>
                 </div>
 
             </div>

@@ -1,10 +1,10 @@
 import type {TaskBase,TaskStatus,Task} from "../types/task";
-import type {modals} from "../App";
+import type {Modals} from "../App";
 import {Button} from "./Button";
 
 type TaskListItemProps = {
     task: Task;
-    setDisplayedModal: (modal: modals) => void;
+    setDisplayedModal: (modal: Modals) => void;
     setSelectedTask: (task: Task) => void;
     editTask: (id:string,task:TaskBase) => void;
 }
@@ -42,7 +42,7 @@ export function TaskListItem({task,setDisplayedModal,setSelectedTask,editTask}:T
                     <option value="Completed">Completed</option>
                 </select>
                 <Button variant="secondary" onClick={() => handleModalTrigger("edit",task)}>Edit</Button>
-                <Button variant="dangerTwo" onClick={() => handleModalTrigger("delete",task)}>Delete</Button>
+                <Button variant="dangerFilled" onClick={() => handleModalTrigger("delete",task)}>Delete</Button>
             </div>
         </li>
     );

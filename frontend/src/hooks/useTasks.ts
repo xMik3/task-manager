@@ -4,27 +4,23 @@ import type {Task,TaskBase} from '../types/task';
 const API = 'http://localhost:3000/tasks';
 
 export function useTasks(){
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(true);
 
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
-      let timeoutId: ReturnType<typeof setTimeout>;
+      if (!isFetching) return;
 
-      if (isFetching) {
-          timeoutId = setTimeout(() => setShowLoading(true), 250);
-      } else {
-          setShowLoading(false);
-      }
+      const timeoutId = setTimeout(() => setShowLoading(true), 250);
 
       return () => clearTimeout(timeoutId);
+
   }, [isFetching]);
 
   //GET request at /tasks
   useEffect(() => {
-    setIsFetching(true);
     fetch(API)
       .then(res => {
         if(!res.ok){
@@ -36,10 +32,17 @@ export function useTasks(){
       .then(data => {
         setTasks(data);
         setIsFetching(false);
+        setShowLoading(false);
       })
-      .catch(err => {
-        setError(err.message);
+      .catch((err: unknown) => {
+        if(err instanceof Error) {
+          setError(err.message);
+        }else{
+          setError('An unexpected error occurred');
+        }
+
         setIsFetching(false);
+        setShowLoading(false);
       });
   }, []);
 
@@ -60,8 +63,12 @@ export function useTasks(){
 
       setTasks(previousTasks => [...previousTasks, newTask]);
 
-    }catch(err: any){
-      setError(err.message);
+    }catch(err: unknown){
+      if(err instanceof Error) {
+        alert(err.message);
+      }else{
+        alert('An unexpected error occurred');
+      }
     }
   };
 
@@ -90,8 +97,12 @@ export function useTasks(){
         })
       );
 
-    }catch(err: any){
-      setError(err.message);
+    }catch(err: unknown){
+      if(err instanceof Error) {
+        alert(err.message);
+      }else{
+        alert('An unexpected error occurred');
+      }
     }
   };
 
@@ -108,8 +119,12 @@ export function useTasks(){
 
       setTasks(prevTasks => prevTasks.filter(task => task.id !== id));
 
-    }catch(err: any){
-      setError(err.message);
+    }catch(err: unknown){
+      if(err instanceof Error) {
+        alert(err.message);
+      }else{
+        alert('An unexpected error occurred');
+      }
     }
   };
 

@@ -3,27 +3,21 @@ import type {Analytics} from "../types/analytics";
 
 export function useAnalytics(){
 
-    const [isFetching, setIsFetching] = useState<boolean>(false);
+    const [isFetching, setIsFetching] = useState<boolean>(true);
 
     const [analytics,setAnalytics] = useState<Analytics | null>(null);
     const [error,setError] = useState<string>();
     const [showLoading, setShowLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        let timeoutId: ReturnType<typeof setTimeout>;
+        if (!isFetching) return;
 
-        if (isFetching) {
-            timeoutId = setTimeout(() => setShowLoading(true), 250);
-        } else {
-            setShowLoading(false);
-        }
-
+        const timeoutId = setTimeout(() => setShowLoading(true), 250);
         return () => clearTimeout(timeoutId);
     }, [isFetching]);
 
     //GET request to the /tasks/analytics endpoint
     useEffect(() => {
-        setIsFetching(true);
         fetch('http://localhost:3000/tasks/analytics')
             .then(res => {
                 if(!res.ok){
@@ -35,10 +29,17 @@ export function useAnalytics(){
             .then(data => {
                 setAnalytics(data);
                 setIsFetching(false);
+                setShowLoading(false);
             })
-            .catch(err => {
-                setError(err.message);
+            .catch((err: unknown) => {
+                if(err instanceof Error) {
+                    setError(err.message);
+                }else{
+                    setError('An unexpected error occurred');
+                }
+
                 setIsFetching(false);
+                setShowLoading(false);
             });
         }, []);
 
